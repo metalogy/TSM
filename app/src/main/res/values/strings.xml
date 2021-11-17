@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FitApp</string>
+    <string name="btnExercise">Start exercise</string>
+    <string name="btnWorkout">Start workout</string>
+    <string name="btnPushup">Push ups</string>
+    <string name="btnSquats">Squats</string>
 </resources>

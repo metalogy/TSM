@@ -5,19 +5,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <Button
-        android:id="@+id/btnExercise"
+        android:id="@+id/btnPushup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnExercise"
+        android:text="@string/btnPushup"
         tools:layout_editor_absoluteX="126dp"
         tools:layout_editor_absoluteY="180dp" />
 
     <Button
-        android:id="@+id/btnWorkout"
+        android:id="@+id/btnSquats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnWorkout"
+        android:text="@string/btnSquats"
         tools:layout_editor_absoluteX="138dp"
         tools:layout_editor_absoluteY="59dp" />
 </LinearLayout>
