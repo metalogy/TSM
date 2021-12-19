@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical"
     tools:context=".SquatActivity">
 
     <TextView
         android:id="@+id/tvSquatsText"
         android:layout_width="match_parent"
-        android:layout_height="81dp"
+        android:layout_height="125dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="Squats: "
         tools:layout_editor_absoluteX="173dp"
         tools:layout_editor_absoluteY="262dp" />
@@ -18,7 +20,8 @@
     <EditText
         android:id="@+id/tvSquatCounter"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="125dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="0" />
 
 </LinearLayout>

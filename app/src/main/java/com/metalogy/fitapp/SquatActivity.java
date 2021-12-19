@@ -1,5 +1,8 @@
 package com.metalogy.fitapp;
 
+import static com.metalogy.fitapp.constants.constants.DOWN_THRESHOLD_SQUATS;
+import static com.metalogy.fitapp.constants.constants.SQUATS_VALUES_BUFFER_SIZE;
+import static com.metalogy.fitapp.constants.constants.UP_THRESHOLD_SQUATS;
 import static com.metalogy.fitapp.enums.pushPullEnum.DOWN;
 import static com.metalogy.fitapp.enums.pushPullEnum.NEUTRAL;
 import static com.metalogy.fitapp.enums.pushPullEnum.UP;
@@ -13,6 +16,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,14 +24,12 @@ import com.metalogy.fitapp.enums.pushPullEnum;
 
 import java.util.ArrayDeque;
 
-public class SquatActivity extends AppCompatActivity {
+public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
 
     private SensorManager sensorManager;
-
-
     private Sensor accelerometer;
     private SensorEventListener accelerometerEventListener;
-
+    private TextToSpeech textToSpeech;
 
     private TextView tvSquatCounter;
 
@@ -37,8 +39,6 @@ public class SquatActivity extends AppCompatActivity {
     private ArrayDeque<Float> valuesOverTimeY = new ArrayDeque<Float>();
     private ArrayDeque<Float> valuesOverTimeZ = new ArrayDeque<Float>();
 
-    private double upTHRESHOLD = 8.5;
-    private double downTHRESHOLD = 11.5;
     private int squatCounter = 0;
 
 
@@ -49,9 +49,10 @@ public class SquatActivity extends AppCompatActivity {
 
         tvSquatCounter = findViewById(R.id.tvSquatCounter);
 
+        textToSpeech = new TextToSpeech(this, this);
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
 
         if (accelerometer == null) {
             Toast.makeText(this, "The device has no accelerometer!", Toast.LENGTH_SHORT).show();
@@ -60,9 +61,6 @@ public class SquatActivity extends AppCompatActivity {
         accelerometerEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
-
-                //tvX.setText(xd);
-
                 float Y = event.values[1];
                 float Z = event.values[2];
                 valuesOverTimeY = updateVal(valuesOverTimeY, Y);
@@ -96,7 +94,7 @@ public class SquatActivity extends AppCompatActivity {
     }
 
     private ArrayDeque<Float> updateVal(ArrayDeque<Float> valuesOverTime, float newValue) {
-        if (valuesOverTime.size() > 20) {
+        if (valuesOverTime.size() > SQUATS_VALUES_BUFFER_SIZE) {
             valuesOverTime.clear();
         }
         valuesOverTime.add(newValue);
@@ -104,7 +102,7 @@ public class SquatActivity extends AppCompatActivity {
     }
 
     private Double calculateMeanAcc(ArrayDeque<Float> valuesOverTime) {
-        if (valuesOverTime.size() == 20) {
+        if (valuesOverTime.size() == SQUATS_VALUES_BUFFER_SIZE) {
             return valuesOverTime.stream().mapToDouble(val -> val).average().orElse(0.0);
         }
         return 0.0;
@@ -119,10 +117,10 @@ public class SquatActivity extends AppCompatActivity {
             mean = meanZ;
         }
 
-        if (mean > downTHRESHOLD) {
+        if (mean > DOWN_THRESHOLD_SQUATS) {
             previousState = currentState;
             currentState = DOWN;
-        } else if (mean < upTHRESHOLD) {
+        } else if (mean < UP_THRESHOLD_SQUATS) {
             previousState = currentState;
             currentState = UP;
         }
@@ -132,6 +130,19 @@ public class SquatActivity extends AppCompatActivity {
         if (previousState == DOWN && currentState == UP) {
             squatCounter++;
             tvSquatCounter.setText("" + squatCounter);
+            textToSpeech.speak(
+                    String.valueOf(squatCounter), TextToSpeech.QUEUE_ADD, null
+            );
         }
+    }
+
+    @Override
+    public void onInit(int status) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
