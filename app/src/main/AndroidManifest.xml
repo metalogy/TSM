@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitApp">
         <activity
+            android:name=".SquatActivity"
+            android:exported="false" />
+        <activity
             android:name=".PushUpActivity"
             android:exported="false" />
         <activity
