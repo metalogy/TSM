@@ -28,4 +28,10 @@
         android:layout_height="100dp"
         app:moPubAdSize="match_view"
         />
+
+    <Button
+        android:id="@+id/btnStopwatch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stopwatch" />
 </LinearLayout>
