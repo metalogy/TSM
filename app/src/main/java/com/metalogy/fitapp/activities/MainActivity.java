@@ -14,14 +14,17 @@ import com.metalogy.fitapp.R;
 import com.mopub.common.MoPub;
 import com.mopub.common.SdkConfiguration;
 import com.mopub.common.SdkInitializationListener;
+import com.mopub.mobileads.MoPubErrorCode;
+import com.mopub.mobileads.MoPubInterstitial;
 import com.mopub.mobileads.MoPubView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MoPubInterstitial.InterstitialAdListener {
 
     Button btnExercise;
     Button btnWorkout;
 
     private MoPubView moPubView;
+    private MoPubInterstitial mInterstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,18 @@ public class MainActivity extends AppCompatActivity {
         moPubView.loadAd();
     }
 
+    private void interstitialAd(){
+        mInterstitial = new MoPubInterstitial(this, "24534e1901884e398f1253216226017e"); //test
+        mInterstitial.setInterstitialAdListener(this);
+        mInterstitial.load();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mInterstitial.destroy();
+        super.onDestroy();
+    }
+
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -82,4 +97,35 @@ public class MainActivity extends AppCompatActivity {
         }, 2000);
     }
 
+    @Override
+    public void onInterstitialLoaded(MoPubInterstitial moPubInterstitial) {
+        yourAppsShowInterstitialMethod();
+
+    }
+
+    @Override
+    public void onInterstitialFailed(MoPubInterstitial moPubInterstitial, MoPubErrorCode moPubErrorCode) {
+
+    }
+
+    @Override
+    public void onInterstitialShown(MoPubInterstitial moPubInterstitial) {
+
+    }
+
+    @Override
+    public void onInterstitialClicked(MoPubInterstitial moPubInterstitial) {
+
+    }
+
+    @Override
+    public void onInterstitialDismissed(MoPubInterstitial moPubInterstitial) {
+
+    }
+
+    private void yourAppsShowInterstitialMethod() {
+        if (mInterstitial.isReady()) {
+            mInterstitial.show();
+        }
+    }
 }
