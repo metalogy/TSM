@@ -1,4 +1,4 @@
-package com.metalogy.fitapp;
+package com.metalogy.fitapp.activities;
 
 import static com.metalogy.fitapp.constants.constants.DOWN_THRESHOLD_SQUATS;
 import static com.metalogy.fitapp.constants.constants.SQUATS_VALUES_BUFFER_SIZE;
@@ -20,11 +20,12 @@ import android.speech.tts.TextToSpeech;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.metalogy.fitapp.R;
 import com.metalogy.fitapp.enums.pushPullEnum;
 
 import java.util.ArrayDeque;
 
-public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
+public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -69,7 +70,6 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
                 double meanAccChangeZ = calculateMeanAcc(valuesOverTimeZ);
                 checkPosition(meanAccChangeY, meanAccChangeZ);
                 checkIfSquated();
-
             }
 
             @Override
@@ -78,7 +78,6 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
 
             }
         };
-
     }
 
     @Override
@@ -138,11 +137,6 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
 
     @Override
     public void onInit(int status) {
-
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }

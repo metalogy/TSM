@@ -20,4 +20,10 @@
         android:text="@string/btnWorkout"
         tools:layout_editor_absoluteX="138dp"
         tools:layout_editor_absoluteY="59dp" />
+
+    <Button
+        android:id="@+id/btnStopwatch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stopwatch" />
 </LinearLayout>
