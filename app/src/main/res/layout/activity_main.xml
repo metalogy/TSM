@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <Button
@@ -20,4 +21,11 @@
         android:text="@string/btnWorkout"
         tools:layout_editor_absoluteX="138dp"
         tools:layout_editor_absoluteY="59dp" />
+
+    <com.mopub.mobileads.MoPubView
+        android:id="@+id/adview"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:moPubAdSize="match_view"
+        />
 </LinearLayout>
