@@ -4,4 +4,9 @@
     <string name="btnWorkout">Start workout</string>
     <string name="btnPushup">Push ups</string>
     <string name="btnSquats">Squats</string>
+    <string name="btnStopwatch">Stopwatch</string>
+    <string name="tvPushUps">Push ups:</string>
+    <string name="counterDefaultValue">0</string>
+    <string name="tvSquats">Squats:</string>
+    <string name="toastCloseApp">"</string>
 </resources>

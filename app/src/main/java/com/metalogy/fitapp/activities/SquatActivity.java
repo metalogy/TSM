@@ -37,8 +37,8 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
     private pushPullEnum currentState = NEUTRAL;
     private pushPullEnum previousState;
 
-    private ArrayDeque<Float> valuesOverTimeY = new ArrayDeque<Float>();
-    private ArrayDeque<Float> valuesOverTimeZ = new ArrayDeque<Float>();
+    private ArrayDeque<Float> valuesOverTimeY = new ArrayDeque<>();
+    private ArrayDeque<Float> valuesOverTimeZ = new ArrayDeque<>();
 
     private int squatCounter = 0;
 
@@ -74,8 +74,6 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
 
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
-                ;
-
             }
         };
     }
@@ -108,7 +106,7 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
     }
 
     private void checkPosition(Double meanY, Double meanZ) {
-        Double mean;
+        double mean;
 
         if (abs(meanY) > abs(meanZ)) {
             mean = meanY;
@@ -139,4 +137,5 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
     public void onInit(int status) {
 
     }
+    //#TODO add finish button
 }

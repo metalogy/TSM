@@ -1,21 +1,23 @@
 package com.metalogy.fitapp.activities;
 
-import android.content.Intent;
+import static com.metalogy.fitapp.constants.constants.PUSH_UPS_DOWN_TIME_MILLIS;
+
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
+import android.speech.tts.TextToSpeech;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.metalogy.fitapp.R;
 
-public class PushUpActivity extends AppCompatActivity {
-    TextView textView;
-    TextView textView2;
-    int curr;
+public class PushUpActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+    private TextToSpeech textToSpeech;
+
+    TextView tvPushUpsCounter;
+
+    int pushUpCounter;
     long pushedDownTime;
     long pushedUpTime;
 
@@ -24,11 +26,12 @@ public class PushUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_push_up);
 
-        textView = findViewById(R.id.tv);
-        textView2 = findViewById(R.id.tv2);
+        tvPushUpsCounter = findViewById(R.id.tvPushUpsCounter);
 
-        textView.setText("0");
+        textToSpeech = new TextToSpeech(this, this);
 
+        tvPushUpsCounter.setText("0");
+        pushUpCounter = 0;
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -42,10 +45,12 @@ public class PushUpActivity extends AppCompatActivity {
                 pushedUpTime = SystemClock.elapsedRealtime();
                 long pressedTime = pushedUpTime - pushedDownTime;
 
-                if (pressedTime >= 2000) {
-                    curr = Integer.parseInt(textView.getText().toString());
-                    curr++;
-                    textView.setText(String.valueOf(curr));
+                if (pressedTime >= PUSH_UPS_DOWN_TIME_MILLIS) {
+                    pushUpCounter++;
+                    tvPushUpsCounter.setText(String.valueOf(pushUpCounter));
+                    textToSpeech.speak(
+                            String.valueOf(pushUpCounter), TextToSpeech.QUEUE_ADD, null
+                    );
                 }
                 break;
         }
@@ -56,5 +61,10 @@ public class PushUpActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void onInit(int status) {
+
     }
 }
