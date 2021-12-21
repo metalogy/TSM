@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements MoPubInterstitial
         btnExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("DUPA");
                 startActivity(new Intent(MainActivity.this, SelectionActivity.class));
             }
         });
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements MoPubInterstitial
             public void onInitializationFinished() {
            /* MoPub SDK initialized.
            Check if you should show the consent dialog here, and make your ad requests. */
+                interstitialAd();
                 bannerAd();
             }
         };
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MoPubInterstitial
         moPubView.loadAd();
     }
 
-    private void interstitialAd(){
+    private void interstitialAd() {
         mInterstitial = new MoPubInterstitial(this, "24534e1901884e398f1253216226017e"); //test
         mInterstitial.setInterstitialAdListener(this);
         mInterstitial.load();
