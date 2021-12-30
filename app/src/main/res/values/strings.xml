@@ -1,12 +1,18 @@
 <resources>
     <string name="app_name">FitApp</string>
     <string name="btnExercise">Start exercise</string>
-    <string name="btnWorkout">Start workout</string>
+    <string name="btnWatchAd">Watch ad for extra points</string>
     <string name="btnPushup">Push ups</string>
+    <string name="btnPullUps">Pull ups</string>
     <string name="btnSquats">Squats</string>
     <string name="btnStopwatch">Stopwatch</string>
     <string name="tvPushUps">Push ups:</string>
+    <string name="tvPullUps">Pull ups:</string>
     <string name="counterDefaultValue">0</string>
     <string name="tvSquats">Squats:</string>
-    <string name="toastCloseApp">"</string>
+    <string name="btnExit">Exit activity</string>
+    <string name="stop_voice_recognition">Stop voice recognition</string>
+    <string name="start_voice_recognition">Start voice recognition</string>
+    <string name="speech_result">Speech Result:</string>
+    <string name="time_elapsed">Time elapsed:</string>
 </resources>

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.metalogy.fitapp">
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitApp">
         <activity
-            android:name=".activities.VoiceStopwachActivity"
+            android:name=".activities.PullUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.VoiceStopwatchActivity"
             android:exported="false" />
         <activity
             android:name=".activities.SquatActivity"
@@ -29,6 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

@@ -1,38 +1,42 @@
 package com.metalogy.fitapp.activities;
 
-import static com.metalogy.fitapp.constants.Constants.DOWN_THRESHOLD_SQUATS;
-import static com.metalogy.fitapp.constants.Constants.SQUATS_VALUES_BUFFER_SIZE;
-import static com.metalogy.fitapp.constants.Constants.UP_THRESHOLD_SQUATS;
+import static com.metalogy.fitapp.constants.Constants.DOWN_THRESHOLD_PULL_UP;
+import static com.metalogy.fitapp.constants.Constants.POINTS_FOR_WATCHING_AD;
+import static com.metalogy.fitapp.constants.Constants.PULL_UPS_VALUES_BUFFER_SIZE;
+import static com.metalogy.fitapp.constants.Constants.SHARED_PREFS_POINTS;
+import static com.metalogy.fitapp.constants.Constants.UP_THRESHOLD_PULL_UP;
 import static com.metalogy.fitapp.enums.PushPullEnum.DOWN;
 import static com.metalogy.fitapp.enums.PushPullEnum.NEUTRAL;
 import static com.metalogy.fitapp.enums.PushPullEnum.UP;
 
 import static java.lang.Math.abs;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.metalogy.fitapp.R;
 import com.metalogy.fitapp.enums.PushPullEnum;
 
 import java.util.ArrayDeque;
 
-public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+public class PullUpActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private SensorEventListener accelerometerEventListener;
     private TextToSpeech textToSpeech;
 
-    private TextView tvSquatCounter;
+    private TextView tvPullUpCounter;
 
     private PushPullEnum currentState = NEUTRAL;
     private PushPullEnum previousState;
@@ -40,15 +44,15 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
     private ArrayDeque<Float> valuesOverTimeY = new ArrayDeque<>();
     private ArrayDeque<Float> valuesOverTimeZ = new ArrayDeque<>();
 
-    private int squatCounter = 0;
+    private int pullUpCounter = 0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_squat);
+        setContentView(R.layout.activity_pull_up);
 
-        tvSquatCounter = findViewById(R.id.tvSquatCounter);
+        tvPullUpCounter = findViewById(R.id.tvPullUpCounter);
 
         textToSpeech = new TextToSpeech(this, this);
 
@@ -69,7 +73,7 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
                 double meanAccChangeY = calculateMeanAcc(valuesOverTimeY);
                 double meanAccChangeZ = calculateMeanAcc(valuesOverTimeZ);
                 checkPosition(meanAccChangeY, meanAccChangeZ);
-                checkIfSquated();
+                checkIfPulledUp();
             }
 
             @Override
@@ -91,7 +95,7 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
     }
 
     private ArrayDeque<Float> updateVal(ArrayDeque<Float> valuesOverTime, float newValue) {
-        if (valuesOverTime.size() > SQUATS_VALUES_BUFFER_SIZE) {
+        if (valuesOverTime.size() > PULL_UPS_VALUES_BUFFER_SIZE) {
             valuesOverTime.clear();
         }
         valuesOverTime.add(newValue);
@@ -99,7 +103,7 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
     }
 
     private Double calculateMeanAcc(ArrayDeque<Float> valuesOverTime) {
-        if (valuesOverTime.size() == SQUATS_VALUES_BUFFER_SIZE) {
+        if (valuesOverTime.size() == PULL_UPS_VALUES_BUFFER_SIZE) {
             return valuesOverTime.stream().mapToDouble(val -> val).average().orElse(0.0);
         }
         return 0.0;
@@ -114,21 +118,21 @@ public class SquatActivity extends AppCompatActivity implements TextToSpeech.OnI
             mean = meanZ;
         }
 
-        if (mean > DOWN_THRESHOLD_SQUATS) {
+        if (mean > DOWN_THRESHOLD_PULL_UP) {
             previousState = currentState;
             currentState = DOWN;
-        } else if (mean < UP_THRESHOLD_SQUATS) {
+        } else if (mean <= UP_THRESHOLD_PULL_UP) {
             previousState = currentState;
             currentState = UP;
         }
     }
 
-    private void checkIfSquated() {
-        if (previousState == DOWN && currentState == UP) {
-            squatCounter++;
-            tvSquatCounter.setText("" + squatCounter);
+    private void checkIfPulledUp() {
+        if (previousState == UP && currentState == DOWN) {
+            pullUpCounter++;
+            tvPullUpCounter.setText("" + pullUpCounter);
             textToSpeech.speak(
-                    String.valueOf(squatCounter), TextToSpeech.QUEUE_ADD, null
+                    String.valueOf(pullUpCounter), TextToSpeech.QUEUE_ADD, null
             );
         }
     }

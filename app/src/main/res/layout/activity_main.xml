@@ -21,6 +21,11 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tvPoints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/btnExercise"
             android:layout_width="match_parent"
@@ -28,10 +33,10 @@
             android:text="@string/btnExercise" />
 
         <Button
-            android:id="@+id/btnWorkout"
+            android:id="@+id/btnAd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btnWorkout" />
+            android:text="@string/btnWatchAd" />
 
     </LinearLayout>
 

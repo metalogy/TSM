@@ -5,24 +5,22 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical"
-    tools:context=".activities.PushUpActivity">
+    tools:context=".activities.SquatActivity">
 
     <TextView
-
-        android:id="@+id/tvPushUps"
+        android:id="@+id/tvPullUpText"
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:gravity="center_horizontal|center_vertical"
-        android:text="@string/tvPushUps"
+        android:text="@string/tvPullUps"
         tools:layout_editor_absoluteX="173dp"
         tools:layout_editor_absoluteY="262dp" />
 
     <TextView
-
-        android:id="@+id/tvPushUpsCounter"
+        android:id="@+id/tvPullUpCounter"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_height="125dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/counterDefaultValue" />
 
 </LinearLayout>

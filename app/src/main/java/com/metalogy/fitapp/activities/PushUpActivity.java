@@ -1,11 +1,12 @@
 package com.metalogy.fitapp.activities;
 
-import static com.metalogy.fitapp.constants.constants.PUSH_UPS_DOWN_TIME_MILLIS;
+import static com.metalogy.fitapp.constants.Constants.PUSH_UPS_DOWN_TIME_MILLIS;
 
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.speech.tts.TextToSpeech;
 import android.view.MotionEvent;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,13 +1,19 @@
 package com.metalogy.fitapp.activities;
 
+import static com.metalogy.fitapp.constants.Constants.POINTS_FOR_WATCHING_AD;
+import static com.metalogy.fitapp.constants.Constants.POINTS_TEXT;
+import static com.metalogy.fitapp.constants.Constants.SHARED_PREFS_POINTS;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.metalogy.fitapp.R;
@@ -21,7 +27,8 @@ import com.mopub.mobileads.MoPubView;
 public class MainActivity extends AppCompatActivity implements MoPubInterstitial.InterstitialAdListener {
 
     Button btnExercise;
-    Button btnWorkout;
+    Button btnAd;
+    TextView tvPoints;
 
     private MoPubView moPubView;
     private MoPubInterstitial mInterstitial;
@@ -35,12 +42,26 @@ public class MainActivity extends AppCompatActivity implements MoPubInterstitial
         MoPub.initializeSdk(this, sdkConfiguration.build(), initSdkListener());
 
         btnExercise = findViewById(R.id.btnExercise);
-        btnWorkout = findViewById(R.id.btnWorkout);
+        btnAd = findViewById(R.id.btnAd);
+        tvPoints = findViewById(R.id.tvPoints);
+
+        updatePointsCounter();
 
         btnExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SelectionActivity.class));
+            }
+        });
+
+        btnAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                interstitialAd();
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_POINTS, MODE_PRIVATE);
+                addPoints(POINTS_FOR_WATCHING_AD);
+                Toast.makeText(MainActivity.this, POINTS_FOR_WATCHING_AD + " added to your account!", Toast.LENGTH_SHORT).show();
+                updatePointsCounter();
             }
         });
 
@@ -127,5 +148,21 @@ public class MainActivity extends AppCompatActivity implements MoPubInterstitial
         if (mInterstitial.isReady()) {
             mInterstitial.show();
         }
+    }
+
+    public void addPoints(int amount) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_POINTS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(POINTS_TEXT, getPoints() + amount);
+        editor.apply();
+    }
+
+    public int getPoints() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_POINTS, MODE_PRIVATE);
+        return sharedPreferences.getInt(POINTS_TEXT, 0);
+    }
+
+    public void updatePointsCounter() {
+        tvPoints.setText("Points: " + getPoints());
     }
 }
