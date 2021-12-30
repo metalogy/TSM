@@ -75,7 +75,6 @@ public class SelectionActivity extends AppCompatActivity {
         btnStopwatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SelectionActivity.this, VoiceStopwatchActivity.class));
                 if (!getStatusOfLock(STOPWATCH_TEXT)) {
                     if (getPoints() >= POINTS_FOR_ACTIVITY_UNLOCK) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(SelectionActivity.this);
@@ -108,7 +107,6 @@ public class SelectionActivity extends AppCompatActivity {
         btnPullups.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SelectionActivity.this, PullUpActivity.class));
                 if (!getStatusOfLock(PULLUP_TEXT)) {
                     if (getPoints() >= POINTS_FOR_ACTIVITY_UNLOCK) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(SelectionActivity.this);
