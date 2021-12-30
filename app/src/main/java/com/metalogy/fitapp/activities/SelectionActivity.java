@@ -51,6 +51,7 @@ public class SelectionActivity extends AppCompatActivity {
 
         updatePointsCounter();
         updateLockedIcon(btnStopwatch, STOPWATCH_TEXT);
+        updateLockedIcon(btnPullups, PULLUP_TEXT);
 
         btnPushup.setOnClickListener(new View.OnClickListener() {
 
@@ -129,7 +130,7 @@ public class SelectionActivity extends AppCompatActivity {
                     Toast.makeText(SelectionActivity.this, "Sorry, you need " + POINTS_FOR_ACTIVITY_UNLOCK + " to unlock activity!", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    startActivity(new Intent(SelectionActivity.this, VoiceStopwatchActivity.class));
+                    startActivity(new Intent(SelectionActivity.this, PullUpActivity.class));
                 }
                 updateLockedIcon(btnPullups, PULLUP_TEXT);
                 updatePointsCounter();
