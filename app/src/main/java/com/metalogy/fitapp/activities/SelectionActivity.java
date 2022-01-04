@@ -76,7 +76,7 @@ public class SelectionActivity extends AppCompatActivity {
         btnStopwatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!getStatusOfLock(STOPWATCH_TEXT)) {
+                if (!getStatusOfUnlock(STOPWATCH_TEXT)) {
                     if (getPoints() >= POINTS_FOR_ACTIVITY_UNLOCK) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(SelectionActivity.this);
                         builder.setTitle(R.string.app_name);
@@ -85,6 +85,7 @@ public class SelectionActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 removePoints(POINTS_FOR_ACTIVITY_UNLOCK);
                                 unlockActivity(STOPWATCH_TEXT);
+                                updateLockedIcon(btnStopwatch, STOPWATCH_TEXT);
                             }
                         });
                         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -94,13 +95,12 @@ public class SelectionActivity extends AppCompatActivity {
                         });
                         AlertDialog alert = builder.create();
                         alert.show();
+                    } else {
+                        Toast.makeText(SelectionActivity.this, "Sorry, you need " + POINTS_FOR_ACTIVITY_UNLOCK + " to unlock activity!", Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(SelectionActivity.this, "Sorry, you need " + POINTS_FOR_ACTIVITY_UNLOCK + " to unlock activity!", Toast.LENGTH_SHORT).show();
-
                 } else {
                     startActivity(new Intent(SelectionActivity.this, VoiceStopwatchActivity.class));
                 }
-                updateLockedIcon(btnStopwatch, STOPWATCH_TEXT);
                 updatePointsCounter();
             }
         });
@@ -108,7 +108,7 @@ public class SelectionActivity extends AppCompatActivity {
         btnPullups.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!getStatusOfLock(PULLUP_TEXT)) {
+                if (!getStatusOfUnlock(PULLUP_TEXT)) {
                     if (getPoints() >= POINTS_FOR_ACTIVITY_UNLOCK) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(SelectionActivity.this);
                         builder.setTitle(R.string.app_name);
@@ -117,6 +117,7 @@ public class SelectionActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 removePoints(POINTS_FOR_ACTIVITY_UNLOCK);
                                 unlockActivity(PULLUP_TEXT);
+                                updateLockedIcon(btnPullups, PULLUP_TEXT);
                             }
                         });
                         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -126,13 +127,12 @@ public class SelectionActivity extends AppCompatActivity {
                         });
                         AlertDialog alert = builder.create();
                         alert.show();
+                    } else {
+                        Toast.makeText(SelectionActivity.this, "Sorry, you need " + POINTS_FOR_ACTIVITY_UNLOCK + " to unlock activity!", Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(SelectionActivity.this, "Sorry, you need " + POINTS_FOR_ACTIVITY_UNLOCK + " to unlock activity!", Toast.LENGTH_SHORT).show();
-
                 } else {
                     startActivity(new Intent(SelectionActivity.this, PullUpActivity.class));
                 }
-                updateLockedIcon(btnPullups, PULLUP_TEXT);
                 updatePointsCounter();
             }
         });
@@ -178,7 +178,8 @@ public class SelectionActivity extends AppCompatActivity {
         tvPoints.setText("Points: " + getPoints());
     }
 
-    public boolean getStatusOfLock(String activityName) {
+    public boolean getStatusOfUnlock(String activityName) {
+        //true ->aktywność oblokowana
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_UNLOCKED, MODE_PRIVATE);
         return sharedPreferences.getBoolean(activityName, false);
     }
@@ -191,7 +192,7 @@ public class SelectionActivity extends AppCompatActivity {
     }
 
     public void updateLockedIcon(Button button, String activityName) {
-        if (getStatusOfLock(activityName)) {
+        if (getStatusOfUnlock(activityName)) {
             button.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
         }
     }
